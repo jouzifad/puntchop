@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plunt Chop ✂️</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: #f9f9f9;
+            color: #111;
+        }
+        
+        header {
+            background: #111;
+            color: #fff;
+            text-align: center;
+            padding: 2rem;
+        }
+        
+        header h1 {
+            font-size: 2.5rem;
+            letter-spacing: 4px;
+        }
+        
+        header p {
+            opacity: 0.6;
+            margin-top: 0.5rem;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            background: #fff;
+            border-bottom: 2px solid #111;
+        }
+        
+        .tab {
+            padding: 1rem 3rem;
+            cursor: pointer;
+            font-size: 1rem;
+            border: none;
+            background: none;
+            font-weight: 600;
+        }
+        
+        .tab.active {
+            background: #111;
+            color: #fff;
+        }
+        
+        .container {
+            max-width: 700px;
+            margin: 2rem auto;
+            padding: 1rem;
+        }
+        
+        .step {
+            display: none;
+        }
+        
+        .step.active {
+            display: block;
+        }
+        
+        h2 {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #111;
+            padding-bottom: 0.5rem;
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+        
+        .service-card {
+            border: 2px solid #ddd;
+            padding: 1.2rem;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .service-card:hover,
+        .service-card.selected {
+            border-color: #111;
+            background: #111;
+            color: #fff;
+        }
+        
+        .service-card h3 {
+            font-size: 1.1rem;
+        }
+        
+        .service-card .price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin-top: 0.5rem;
+        }
+        
+        .service-card .duration {
+            opacity: 0.6;
+            font-size: 0.85rem;
+        }
+        
+        .slots-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.8rem;
+        }
+        
+        .slot {
+            border: 2px solid #ddd;
+            padding: 0.8rem;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        
+        .slot:hover,
+        .slot.selected {
+            border-color: #111;
+            background: #111;
+            color: #fff;
+        }
+        
+        .slot.booked {
+            background: #f0f0f0;
+            color: #aaa;
+            cursor: not-allowed;
+            border-color: #ddd;
+        }
+        
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        
+        .form-group label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        .form-group input:focus {
+            outline: none;
+            border-color: #111;
+        }
+        
+        .btn {
+            background: #111;
+            color: #fff;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            width: 100%;
+            margin-top: 1rem;
+            transition: background 0.2s;
+        }
+        
+        .btn:hover {
+            background: #333;
+        }
+        
+        .btn-outline {
+            background: #fff;
+            color: #111;
+            border: 2px solid #111;
+        }
+        
+        .btn-outline:hover {
+            background: #111;
+            color: #fff;
+        }
+        
+        .btn-whatsapp {
+            background: #25D366;
+            color: #fff;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1rem;
+            cursor: pointer;
+            border-radius: 4px;
+            width: 100%;
+            margin-top: 0.8rem;
+            font-weight: 700;
+        }
+        
+        .btn-whatsapp:hover {
+            background: #128C7E;
+        }
+        
+        .dates-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+        }
+        
+        .date-btn {
+            border: 2px solid #ddd;
+            padding: 0.6rem 0.3rem;
+            text-align: center;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+        }
+        
+        .date-btn:hover,
+        .date-btn.selected {
+            border-color: #111;
+            background: #111;
+            color: #fff;
+        }
+        
+        .date-btn .day-name {
+            font-size: 0.7rem;
+            opacity: 0.7;
+        }
+        
+        .date-btn .day-num {
+            font-weight: 700;
+            font-size: 1rem;
+        }
+        
+        .confirm-box {
+            background: #111;
+            color: #fff;
+            padding: 2rem;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .confirm-box .checkmark {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .confirm-details {
+            text-align: right;
+            margin: 1.5rem 0;
+            background: #222;
+            padding: 1rem;
+            border-radius: 4px;
+        }
+        
+        .confirm-details p {
+            padding: 0.4rem 0;
+            border-bottom: 1px solid #333;
+        }
+        
+        .confirm-details p:last-child {
+            border-bottom: none;
+        }
+        
+        .reminder-box {
+            background: #1a1a2e;
+            border: 1px solid #444;
+            border-radius: 4px;
+            padding: 1rem;
+            margin-top: 1rem;
+            color: #aaa;
+            font-size: 0.85rem;
+            text-align: right;
+        }
+        
+        .reminder-box .reminder-status {
+            color: #4ade80;
+            font-weight: 700;
+        }
+        
+        .dashboard {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 1rem;
+            display: none;
+        }
+        
+        .dashboard.active {
+            display: block;
+        }
+        
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: #111;
+            color: #fff;
+            padding: 1.5rem;
+            border-radius: 4px;
+            text-align: center;
+        }
+        
+        .stat-card .num {
+            font-size: 2.5rem;
+            font-weight: 700;
+        }
+        
+        .stat-card .label {
+            opacity: 0.7;
+            font-size: 0.9rem;
+            margin-top: 0.3rem;
+        }
+        
+        .appointments-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #fff;
+        }
+        
+        .appointments-table th {
+            background: #111;
+            color: #fff;
+            padding: 0.8rem;
+            text-align: right;
+        }
+        
+        .appointments-table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid #eee;
+            vertical-align: middle;
+        }
+        
+        .appointments-table tr:hover td {
+            background: #f9f9f9;
+        }
+        
+        .badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .badge-confirmed {
+            background: #d4edda;
+            color: #155724;
+        }
+        
+        .badge-pending {
+            background: #fff3cd;
+            color: #856404;
+        }
+        
+        .badge-cancelled {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .filter-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+        
+        .filter-bar select,
+        .filter-bar input {
+            padding: 0.5rem;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+        }
+        
+        .action-btn {
+            padding: 0.3rem 0.8rem;
+            border: none;
+            cursor: pointer;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            margin: 0 2px;
+        }
+        
+        .btn-confirm-sm {
+            background: #111;
+            color: #fff;
+        }
+        
+        .btn-cancel-sm {
+            background: #f8d7da;
+            color: #721c24;
+        }
+        
+        .btn-wa-sm {
+            background: #25D366;
+            color: #fff;
+        }
+        
+        .progress-bar {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .progress-step {
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            border: 2px solid #ddd;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+        
+        .progress-step.done {
+            background: #111;
+            color: #fff;
+            border-color: #111;
+        }
+        
+        .progress-step.current {
+            border-color: #111;
+            color: #111;
+        }
+        
+        .progress-line {
+            width: 3rem;
+            height: 2px;
+            background: #ddd;
+            align-self: center;
+        }
+        
+        .progress-line.done {
+            background: #111;
+        }
+        /* REMINDER NOTIFICATION */
+        
+        .notif-toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #111;
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            display: none;
+            z-index: 9999;
+            font-size: 0.95rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+            animation: slideUp 0.3s ease;
+        }
+        
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateX(-50%) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <h1>✂ PLUNT CHOP</h1>
+        <p>احجز موعدك بسهولة — نحن جاهزون لك</p>
+    </header>
+
+    <div class="tabs">
+        <button class="tab active" onclick="showTab('booking', event)">📅 حجز موعد</button>
+        <button class="tab" onclick="showTab('admin', event)">🔧 لوحة الإدارة</button>
+    </div>
+
+    <!-- TOAST NOTIFICATION -->
+    <div class="notif-toast" id="toast">🔔 تذكير: لديك موعد غداً!</div>
+
+    <!-- BOOKING SECTION -->
+    <div class="container" id="booking-section">
+        <div class="progress-bar">
+            <div class="progress-step done" id="ps1">1</div>
+            <div class="progress-line" id="pl1"></div>
+            <div class="progress-step current" id="ps2">2</div>
+            <div class="progress-line" id="pl2"></div>
+            <div class="progress-step" id="ps3">3</div>
+            <div class="progress-line" id="pl3"></div>
+            <div class="progress-step" id="ps4">4</div>
+        </div>
+
+        <!-- STEP 1: SERVICE -->
+        <div class="step active" id="step1">
+            <h2>اختر الخدمة</h2>
+            <div class="services-grid">
+                <div class="service-card" onclick="selectService(this, 1, 'قصة شعر', 2, 30)">
+                    <h3>✂️ قصة شعر</h3>
+                    <div class="price">2 دينار</div>
+                    <div class="duration">⏱ 15 دقيقة</div>
+                </div>
+                <div class="service-card" onclick="selectService(this, 2, 'حلاقة لحية', 2, 20)">
+                    <h3>🪒 حلاقة لحية</h3>
+                    <div class="price">2 دينار</div>
+                    <div class="duration">⏱ 20 دقيقة</div>
+                </div>
+                <div class="service-card" onclick="selectService(this, 3, 'قصة + لحية', 4, 45)">
+                    <h3>💈 قصة + لحية</h3>
+                    <div class="price">4 دينار</div>
+                    <div class="duration">⏱ 45 دقيقة</div>
+                </div>
+                <div class="service-card" onclick="selectService(this, 3, 'قصة + لحية', 5, 45)">
+                    <h3>💈 قصة + لحية+سنفرة</h3>
+                    <div class="price">5 دينار</div>
+                    <div class="duration">⏱ 45 دقيقة</div>
+                </div>
+                <div class="service-card" onclick="selectService(this, 4, 'باقة كاملة', 20, 60)">
+                    <h3>⭐ ]شعر ولحية بروتين باقة كاملة</h3>
+                    <div class="price">20 دينار</div>
+                    <div class="duration">⏱ 45 دقيقة</div>
+                </div>
+            </div>
+            <button class="btn" onclick="nextStep(2)">التالي ←</button>
+        </div>
+
+        <!-- STEP 2: DATE & TIME -->
+        <div class="step" id="step2">
+            <h2>اختر التاريخ والوقت</h2>
+            <div class="dates-grid" id="dates-container"></div>
+            <h3 style="margin-bottom:1rem">الأوقات المتاحة</h3>
+            <div class="slots-grid" id="slots-container"></div>
+            <div style="display:flex;gap:1rem;margin-top:1.5rem">
+                <button class="btn btn-outline" onclick="prevStep(1)">→ رجوع</button>
+                <button class="btn" onclick="nextStep(3)">التالي ←</button>
+            </div>
+        </div>
+
+        <!-- STEP 3: CUSTOMER INFO -->
+        <div class="step" id="step3">
+            <h2>بيانات الزبون</h2>
+            <div class="form-group">
+                <label>الاسم الكامل</label>
+                <input type="text" id="cust-name" placeholder="مثال: محمد العلوي">
+            </div>
+            <div class="form-group">
+                <label>رقم الهاتف (واتساب)</label>
+                <input type="tel" id="cust-phone" placeholder="212612345678" dir="ltr">
+            </div>
+            <div class="form-group">
+                <label>ملاحظات (اختياري)</label>
+                <input type="text" id="cust-notes" placeholder="أي تفاصيل إضافية...">
+            </div>
+            <div style="display:flex;gap:1rem">
+                <button class="btn btn-outline" onclick="prevStep(2)">→ رجوع</button>
+                <button class="btn" onclick="confirmBooking()">تأكيد الحجز ✓</button>
+            </div>
+        </div>
+
+        <!-- STEP 4: CONFIRMATION -->
+        <div class="step" id="step4">
+            <div class="confirm-box">
+                <div class="checkmark">✅</div>
+                <h2 style="color:#fff;border-bottom:1px solid #444;padding-bottom:0.8rem">تم تأكيد حجزك!</h2>
+                <div class="confirm-details" id="confirm-details"></div>
+
+                <!-- WHATSAPP BUTTON -->
+                <button class="btn-whatsapp" id="wa-confirm-btn" onclick="sendWhatsAppConfirmation()">
+        📲 إرسال تأكيد عبر واتساب
+      </button>
+
+                <!-- REMINDER STATUS -->
+                <div class="reminder-box">
+                    <span class="reminder-status">🔔 تذكير مجدول</span><br> سيتم تفعيل تذكير تلقائي قبل موعدك بـ 24 ساعة عند فتح التطبيق
+                </div>
+
+                <button class="btn" style="background:#fff;color:#111;margin-top:1rem" onclick="resetBooking()">حجز موعد جديد +</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ADMIN DASHBOARD -->
+    <div class="dashboard" id="admin-section">
+        <h2>لوحة تحكم Plunt Chop ✂️</h2>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="num" id="stat-total">0</div>
+                <div class="label">إجمالي المواعيد</div>
+            </div>
+            <div class="stat-card">
+                <div class="num" id="stat-today">0</div>
+                <div class="label">مواعيد اليوم</div>
+            </div>
+            <div class="stat-card">
+                <div class="num" id="stat-revenue">0 د</div>
+                <div class="label">إجمالي الدخل</div>
+            </div>
+        </div>
+
+        <div class="filter-bar">
+            <input type="date" id="filter-date" onchange="renderDashboard()">
+            <select id="filter-status" onchange="renderDashboard()">
+      <option value="">جميع الحالات</option>
+      <option value="confirmed">مؤكد</option>
+      <option value="pending">معلق</option>
+      <option value="cancelled">ملغى</option>
+    </select>
+            <button class="btn" style="width:auto;padding:0.5rem 1rem" onclick="clearFilters()">عرض الكل</button>
+            <button class="btn btn-whatsapp" style="width:auto;padding:0.5rem 1rem;margin-top:0" onclick="sendDailySummary()">📲 ملخص اليوم عبر واتساب</button>
+        </div>
+
+        <table class="appointments-table">
+            <thead>
+                <tr>
+                    <th>الاسم</th>
+                    <th>الهاتف</th>
+                    <th>الخدمة</th>
+                    <th>التاريخ</th>
+                    <th>الوقت</th>
+                    <th>السعر</th>
+                    <th>الحالة</th>
+                    <th>إجراءات</th>
+                </tr>
+            </thead>
+            <tbody id="appointments-body"></tbody>
+        </table>
+    </div>
+
+    <script>
+        // =====================
+        // CONFIG — غير رقم الهاتف ديالك هنا
+        // =====================
+        const SALON_PHONE = '96555555555'; // رقم الصالون بدون + (مثال: +965554973)
+        const SALON_NAME = 'Plunt Chop';
+
+        // STATE
+        let booking = {
+            service: null,
+            serviceName: '',
+            price: 0,
+            duration: 0,
+            date: null,
+            time: null,
+            name: '',
+            phone: ''
+        };
+        let appointments = JSON.parse(localStorage.getItem('pluntchop_appts') || '[]');
+
+        // Sample data
+        if (appointments.length === 0) {
+            const today = new Date().toISOString().split('T')[0];
+            const tomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0];
+            appointments = [{
+                id: 1,
+                name: 'يوسف العمراني',
+                phone: '212661234567',
+                service: 'قصة شعر',
+                date: today,
+                time: '10:00',
+                price: 50,
+                status: 'confirmed',
+                notes: '',
+                reminderSent: false
+            }, {
+                id: 2,
+                name: 'كريم بنالي',
+                phone: '212672345678',
+                service: 'باقة كاملة',
+                date: today,
+                time: '11:00',
+                price: 120,
+                status: 'confirmed',
+                notes: '',
+                reminderSent: false
+            }, {
+                id: 3,
+                name: 'أمين الإدريسي',
+                phone: '212683456789',
+                service: 'حلاقة لحية',
+                date: tomorrow,
+                time: '14:00',
+                price: 40,
+                status: 'pending',
+                notes: 'يفضل حلاقة خفيفة',
+                reminderSent: false
+            }, ];
+            saveAppointments();
+        }
+
+        function saveAppointments() {
+            localStorage.setItem('pluntchop_appts', JSON.stringify(appointments));
+        }
+
+        // =====================
+        // WHATSAPP FUNCTIONS
+        // =====================
+        function buildWhatsAppURL(phone, message) {
+            const cleaned = phone.replace(/\D/g, '');
+            return `https://wa.me/${cleaned}?text=${encodeURIComponent(message)}`;
+        }
+
+        function sendWhatsAppConfirmation() {
+            const msg = `✂️ *${SALON_NAME}* — تأكيد الحجز\n\nمرحباً ${booking.name}! تم تأكيد موعدك بنجاح ✅\n\n📋 *تفاصيل الموعد:*\n👤 الاسم: ${booking.name}\n✂️ الخدمة: ${booking.serviceName}\n📅 التاريخ: ${booking.date}\n⏰ الوقت: ${booking.time}\n💰 السعر: ${booking.price} درهم\n\nنسعد بزيارتك! إذا أردت التعديل أو الإلغاء تواصل معنا 🙏`;
+            window.open(buildWhatsAppURL(booking.phone, msg), '_blank');
+        }
+
+        function sendWhatsAppReminder(appt) {
+            const msg = `🔔 *${SALON_NAME}* — تذكير بالموعد\n\nمرحباً ${appt.name}! نذكرك بموعدك *غداً* ⏰\n\n✂️ الخدمة: ${appt.service}\n📅 التاريخ: ${appt.date}\n⏰ الوقت: ${appt.time}\n\nنراك قريباً! ✂️🙏`;
+            window.open(buildWhatsAppURL(appt.phone, msg), '_blank');
+        }
+
+        function sendDailySummary() {
+            const today = new Date().toISOString().split('T')[0];
+            const todayAppts = appointments.filter(a => a.date === today && a.status !== 'cancelled');
+            if (todayAppts.length === 0) {
+                showToast('لا توجد مواعيد اليوم');
+                return;
+            }
+            let msg = `📋 *${SALON_NAME}* — مواعيد اليوم (${today})\n\n`;
+            todayAppts.forEach((a, i) => {
+                msg += `${i+1}. ⏰ ${a.time} — ${a.name} — ${a.service} (${a.price} د)\n`;
+            });
+            const total = todayAppts.reduce((s, a) => s + a.price, 0);
+            msg += `\n💰 *الإجمالي المتوقع: ${total} دينار*`;
+            window.open(buildWhatsAppURL(SALON_PHONE, msg), '_blank');
+        }
+
+        // =====================
+        // AUTO REMINDER SYSTEM
+        // =====================
+        function checkReminders() {
+            const now = new Date();
+            const tomorrow = new Date(now);
+            tomorrow.setDate(tomorrow.getDate() + 1);
+            const tomorrowStr = tomorrow.toISOString().split('T')[0];
+
+            appointments.forEach(appt => {
+                if (appt.date === tomorrowStr && appt.status === 'confirmed' && !appt.reminderSent) {
+                    const apptTime = appt.time.split(':');
+                    const apptDateTime = new Date(appt.date + 'T' + appt.time + ':00');
+                    const hoursUntil = (apptDateTime - now) / 3600000;
+
+                    if (hoursUntil <= 24 && hoursUntil > 0) {
+                        showToast(`🔔 تذكير: ${appt.name} عنده موعد غداً الساعة ${appt.time}`);
+                        appt.reminderSent = true;
+                        saveAppointments();
+
+                        // Auto-open WhatsApp reminder after 2 seconds
+                        setTimeout(() => {
+                            if (confirm(`إرسال تذكير واتساب لـ ${appt.name} (${appt.time}؟)`)) {
+                                sendWhatsAppReminder(appt);
+                            }
+                        }, 2000);
+                    }
+                }
+            });
+        }
+
+        function showToast(msg) {
+            const toast = document.getElementById('toast');
+            toast.textContent = msg;
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 5000);
+        }
+
+        // Check reminders every minute
+        checkReminders();
+        setInterval(checkReminders, 60000);
+
+        // =====================
+        // TABS
+        // =====================
+        function showTab(tab, e) {
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            if (e) e.target.classList.add('active');
+            document.getElementById('booking-section').style.display = tab === 'booking' ? 'block' : 'none';
+            document.getElementById('admin-section').classList.toggle('active', tab === 'admin');
+            if (tab === 'admin') renderDashboard();
+        }
+
+        // =====================
+        // BOOKING STEPS
+        // =====================
+        function nextStep(n) {
+            if (n === 2 && !booking.service) {
+                alert('الرجاء اختيار خدمة أولاً');
+                return;
+            }
+            if (n === 3 && (!booking.date || !booking.time)) {
+                alert('الرجاء اختيار التاريخ والوقت');
+                return;
+            }
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step' + n).classList.add('active');
+            updateProgress(n);
+        }
+
+        function prevStep(n) {
+            document.querySelectorAll('.step').forEach(s => s.classList.remove('active'));
+            document.getElementById('step' + n).classList.add('active');
+            updateProgress(n);
+        }
+
+        function updateProgress(current) {
+            for (let i = 1; i <= 4; i++) {
+                const ps = document.getElementById('ps' + i);
+                ps.className = 'progress-step';
+                if (i < current) ps.classList.add('done');
+                else if (i === current) ps.classList.add('current');
+                if (i < 4) {
+                    const pl = document.getElementById('pl' + i);
+                    pl.className = 'progress-line';
+                    if (i < current) pl.classList.add('done');
+                }
+            }
+        }
+
+        function selectService(el, id, name, price, duration) {
+            document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
+            el.classList.add('selected');
+            booking = {...booking,
+                service: id,
+                serviceName: name,
+                price,
+                duration
+            };
+        }
+
+        function generateDates() {
+            const container = document.getElementById('dates-container');
+            container.innerHTML = '';
+            const days = ['الأحد', 'الإثنين', 'الثلاثاء', 'الأربعاء', 'الخميس', 'الجمعة', 'السبت'];
+            for (let i = 0; i < 7; i++) {
+                const d = new Date();
+                d.setDate(d.getDate() + i);
+                const dateStr = d.toISOString().split('T')[0];
+                const btn = document.createElement('div');
+                btn.className = 'date-btn';
+                btn.innerHTML = `<div class="day-name">${days[d.getDay()]}</div><div class="day-num">${d.getDate()}</div>`;
+                btn.onclick = () => {
+                    selectDate(btn, dateStr);
+                };
+                container.appendChild(btn);
+            }
+        }
+
+        function selectDate(el, dateStr) {
+            document.querySelectorAll('.date-btn').forEach(b => b.classList.remove('selected'));
+            el.classList.add('selected');
+            booking.date = dateStr;
+            booking.time = null;
+            generateSlots(dateStr);
+        }
+
+        function generateSlots(dateStr) {
+            const container = document.getElementById('slots-container');
+            container.innerHTML = '';
+            const times = ['09:00', '10:00', '11:00', '12:00', '14:00', '15:00', '16:00', '17:00', '18:00', '19:00'];
+            const bookedTimes = appointments.filter(a => a.date === dateStr && a.status !== 'cancelled').map(a => a.time);
+            times.forEach(time => {
+                const slot = document.createElement('div');
+                const isBooked = bookedTimes.includes(time);
+                slot.className = 'slot' + (isBooked ? ' booked' : '');
+                slot.textContent = time;
+                if (!isBooked) slot.onclick = () => {
+                    document.querySelectorAll('.slot:not(.booked)').forEach(s => s.classList.remove('selected'));
+                    slot.classList.add('selected');
+                    booking.time = time;
+                };
+                container.appendChild(slot);
+            });
+        }
+
+        function confirmBooking() {
+            const name = document.getElementById('cust-name').value.trim();
+            const phone = document.getElementById('cust-phone').value.trim();
+            const notes = document.getElementById('cust-notes').value.trim();
+            if (!name || !phone) {
+                alert('الرجاء إدخال الاسم ورقم الهاتف');
+                return;
+            }
+
+            booking.name = name;
+            booking.phone = phone;
+
+            const appt = {
+                id: Date.now(),
+                name,
+                phone,
+                notes,
+                service: booking.serviceName,
+                date: booking.date,
+                time: booking.time,
+                price: booking.price,
+                status: 'confirmed',
+                reminderSent: false
+            };
+            appointments.push(appt);
+            saveAppointments();
+
+            document.getElementById('confirm-details').innerHTML = `
+      <p>👤 <strong>الاسم:</strong> ${name}</p>
+      <p>✂️ <strong>الخدمة:</strong> ${booking.serviceName}</p>
+      <p>📅 <strong>التاريخ:</strong> ${booking.date}</p>
+      <p>⏰ <strong>الوقت:</strong> ${booking.time}</p>
+      <p>💰 <strong>السعر:</strong> ${booking.price} دينار</p>
+    `;
+            nextStep(4);
+        }
+
+        function resetBooking() {
+            booking = {
+                service: null,
+                serviceName: '',
+                price: 0,
+                duration: 0,
+                date: null,
+                time: null,
+                name: '',
+                phone: ''
+            };
+            ['cust-name', 'cust-phone', 'cust-notes'].forEach(id => document.getElementById(id).value = '');
+            document.querySelectorAll('.service-card').forEach(c => c.classList.remove('selected'));
+            nextStep(1);
+            generateDates();
+        }
+
+        // =====================
+        // DASHBOARD
+        // =====================
+        function renderDashboard() {
+            const filterDate = document.getElementById('filter-date').value;
+            const filterStatus = document.getElementById('filter-status').value;
+            const today = new Date().toISOString().split('T')[0];
+            let filtered = [...appointments];
+            if (filterDate) filtered = filtered.filter(a => a.date === filterDate);
+            if (filterStatus) filtered = filtered.filter(a => a.status === filterStatus);
+
+            document.getElementById('stat-total').textContent = appointments.length;
+            document.getElementById('stat-today').textContent = appointments.filter(a => a.date === today && a.status !== 'cancelled').length;
+            document.getElementById('stat-revenue').textContent = appointments.filter(a => a.status === 'confirmed').reduce((s, a) => s + a.price, 0) + ' د';
+
+            const tbody = document.getElementById('appointments-body');
+            tbody.innerHTML = filtered.length === 0 ? '<tr><td colspan="8" style="text-align:center;padding:2rem;color:#aaa">لا توجد مواعيد</td></tr>' : '';
+
+            filtered.sort((a, b) => (a.date + a.time).localeCompare(b.date + b.time)).forEach(appt => {
+                        const statusMap = {
+                            confirmed: ['badge-confirmed', 'مؤكد'],
+                            pending: ['badge-pending', 'معلق'],
+                            cancelled: ['badge-cancelled', 'ملغى']
+                        };
+                        const [badgeClass, badgeText] = statusMap[appt.status] || ['badge-pending', 'معلق'];
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+        <td>${appt.name}</td>
+        <td dir="ltr" style="font-size:0.85rem">${appt.phone}</td>
+        <td>${appt.service}</td>
+        <td>${appt.date}</td>
+        <td>${appt.time}</td>
+        <td>${appt.price} د</td>
+        <td><span class="badge ${badgeClass}">${badgeText}</span></td>
+        <td>
+          <button class="action-btn btn-wa-sm" onclick="sendWhatsAppReminder(${JSON.stringify(appt).replace(/"/g,'&quot;')})">📲</button>
+          ${appt.status !== 'confirmed' ? `<button class="action-btn btn-confirm-sm" onclick="updateStatus(${appt.id},'confirmed')">✓</button>` : ''}
+          ${appt.status !== 'cancelled' ? `<button class="action-btn btn-cancel-sm" onclick="updateStatus(${appt.id},'cancelled')">✕</button>` : ''}
+        </td>
+      `;
+      tbody.appendChild(tr);
+    });
+  }
+
+  function updateStatus(id, status) {
+    const appt = appointments.find(a => a.id === id);
+    if (appt) { appt.status = status; saveAppointments(); renderDashboard(); }
+  }
+
+  function clearFilters() {
+    document.getElementById('filter-date').value = '';
+    document.getElementById('filter-status').value = '';
+    renderDashboard();
+  }
+
+  // INIT
+  generateDates();
+  updateProgress(1);
+    </script>
+</body>
+
+</html>
